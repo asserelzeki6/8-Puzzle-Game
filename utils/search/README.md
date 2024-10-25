@@ -124,10 +124,6 @@ print(astar.get_info())  # Outputs: {'explored_nodes': 414, 'total_time': 0.0071
 
 ---
 
-# DFS Search Algorithm Documentation
-
----
-
 # BFS (Breadth-First Search) Algorithm Documentation
 
 This module implements the **Breadth-First Search (BFS)** algorithm for solving the 8-puzzle problem. The algorithm explores states level by level, starting from the initial state and exploring all possible moves at each level before proceeding to the next. BFS is guaranteed to find the shortest path to the goal, but it may be inefficient in terms of memory usage for larger problems.
@@ -215,6 +211,10 @@ print(bfs.get_info())  # Expected output: {'explored_nodes': 17588, 'total_time'
 ['123456708', '123456078', '123450678', '123405678', '123045678', '023145678', '203145678', '230145678', '231045678', '031245678', '301245678', '310245678', '312045678', '012345678']
 {'explored_nodes': 17588, 'total_time': 0.07373905181884766, 'search_depth': 25673}
 ```
+
+---
+
+# DFS Search Algorithm Documentation
 
 ---
 
