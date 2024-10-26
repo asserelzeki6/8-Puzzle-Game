@@ -17,6 +17,7 @@ class AStar:
         self.explored_nodes = 0  # Track the number of explored nodes
         self.search_depth = 0  # Track the maximum search depth reached
         self.total_time = 0  # Track the total execution time
+        self.cost=0 # Computed cost
 
     def run(self):
         """
@@ -37,6 +38,7 @@ class AStar:
 
             if current == self.goal_state:  # If the current node is the goal state
                 self.total_time = time.time() - start_time  # Calculate total time
+                self.cost= cost_so_far[current]
                 return self.get_path(came_from, current), cost_so_far[current]  # Return the path and cost
 
             # Loop through the neighbors of the current state
@@ -188,5 +190,6 @@ class AStar:
         return {
             'explored_nodes': self.explored_nodes,  # Number of nodes explored
             'total_time': self.total_time,  # Total time taken for the search
-            'search_depth': self.search_depth  # Maximum search depth reached
+            'search_depth': self.search_depth,  # Maximum search depth reached
+            'cost':self.cost
         }
