@@ -59,32 +59,42 @@ class IT_DFS:
 
     def get_neighbors(self, state):
         """
-        Generates valid neighboring states by moving the blank tile (0).
+        Finds the neighboring states by moving the blank tile ('0') up, down, left, or right.
 
         Args:
-            state (str): The current puzzle state.
+            state (str): The current state of the puzzle.
 
         Returns:
-            A list of neighboring states resulting from valid moves.
+            A list of tuples where each tuple contains the neighbor state and the associated move cost.
         """
-        i = state.index('0')  # Find the blank tile's index
+        i = state.index('0')  # Find the index of the blank space (0)
+        y, x = divmod(i, 3)
+        # print(i,x,y)
         neighbors = []
 
-        # Move the blank tile up if within bounds
-        if i - 3 >= 0:
-            neighbors.append(self.swap(state, i, i - 3))
+        # Move the blank tile up (if possible)
+        if y > 0:
+            # print("up")
+            up = self.swap(state, i, i - 3)  # Swap the blank tile with the tile above
+            neighbors.append((up, self.get_cost(up)))
 
-        # Move the blank tile right if within bounds
-        if i % 3 < 2:  # Right movement within the same row
-            neighbors.append(self.swap(state, i, i + 1))
+        # Move the blank tile right (if possible)
+        if x < 2:  
+            # print("right")
+            right = self.swap(state, i, i + 1)  # Swap the blank tile with the tile on the right
+            neighbors.append((right, self.get_cost(right)))
 
-        # Move the blank tile left if within bounds
-        if i % 3 > 0:  # Left movement within the same row
-            neighbors.append(self.swap(state, i, i - 1))
+        # Move the blank tile left (if possible)
+        if x > 0:
+            # print("left")
+            left = self.swap(state, i, i - 1)  # Swap the blank tile with the tile on the left
+            neighbors.append((left, self.get_cost(left)))
 
-        # Move the blank tile down if within bounds
-        if i + 3 < 9:
-            neighbors.append(self.swap(state, i, i + 3))
+        # Move the blank tile down (if possible)
+        if y < 2:
+            # print("down")
+            down = self.swap(state, i, i + 3)  # Swap the blank tile with the tile below
+            neighbors.append((down, self.get_cost(down)))
 
         return neighbors
 
