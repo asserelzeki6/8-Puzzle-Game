@@ -20,6 +20,7 @@
     }
 
     function playSlow() {
+        pause()
         isPlaying = true;
         if (currentIndex < solutions.length - 1) {
             interval = setInterval(() => {
@@ -34,6 +35,7 @@
     }
 
     function playFast() {
+        pause()
         isPlaying = true;
         if (currentIndex < solutions.length - 1) {
             interval = setInterval(() => {
