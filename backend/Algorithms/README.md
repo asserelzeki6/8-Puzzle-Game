@@ -253,7 +253,7 @@ print(bfs.get_info())  # Expected output: {'explored_nodes': 17588, 'total_time'
 
 ```python
 # Initialize the DFS algorithm with start and goal states
-dfs = DFS('123456780', '012345678')
+dfs = DFS('041586732', '012345678')
 
 # Run the algorithm
 path = dfs.run()
@@ -266,8 +266,7 @@ print(dfs.get_info())  # Example output: {'explored_nodes': X, 'total_time': Y, 
 ### Expected Output
 
 ```python
-['123456708', '123456078', '123450678', '123405678', '123045678', '023145678', '203145678', '230145678', '231045678', '031245678', '301245678', '310245678', '312045678', '012345678']
-{'explored_nodes': 17588, 'total_time': 0.07373905181884766, 'search_depth': 25673}
+{'explored nodes': 107390, 'total time': 0.248, 'max search depth': 70180}
 ```
 
 ---
@@ -311,7 +310,7 @@ print(dfs.get_info())  # Example output: {'explored_nodes': X, 'total_time': Y, 
 
 ```python
 # Initialize the IDDFS algorithm with start and goal states
-it_dfs = IT_DFS('123456780', '012345678')
+it_dfs = IT_DFS('041586732', '012345678')
 
 # Run the algorithm
 path = it_dfs.run()
@@ -324,8 +323,8 @@ print(it_dfs.get_info())  # Example output: {'explored_nodes': X, 'total_time': 
 ### Expected Output
 
 ```python
-['123456708', '123456078', '123450678', '123405678', '123045678', '023145678', '203145678', '230145678', '231045678', '031245678', '301245678', '310245678', '312045678', '012345678']
-{'explored_nodes': 17588, 'total_time': 0.07373905181884766, 'search_depth': 25673}
+['541086732', '541786032', '541786302', '541786320', '541780326', '541708326', '541728306', '541728360', '541720368', '541702368', '541762308', '541762038', '541062738', '541602738', '541632708', '541632078', '541032678', '541302678', '501342678', '051342678', '351042678', '351402678', '301452678', '310452678', '312450678', '312405678', '312045678', '012345678']
+{'explored nodes': 167450, 'total time': 0.168, 'max search depth': 28}
 ```
 
 ---
