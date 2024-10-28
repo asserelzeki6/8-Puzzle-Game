@@ -54,6 +54,10 @@ def start_algorithm():
     for key, value in analysis.items():
         info.append({"title": key, "value": value})
 
+    if path is not None:
+        path.insert(0,initial_input)
+        info.append({"title": "path length", "value": len(path) - 1})
+
     print(info)
     print(path)
     return jsonify({

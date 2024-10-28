@@ -6,7 +6,7 @@
   import { slide } from 'svelte/transition';
 
   let inputString = '125670834';
-  let goalString="123456780"
+  let goalString="012345678"
   let grid = convertStringToGrid(inputString);
   let selectedMethod = "bfs";
   let solutions = [];

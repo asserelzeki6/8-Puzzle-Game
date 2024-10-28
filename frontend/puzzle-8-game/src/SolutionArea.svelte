@@ -78,7 +78,7 @@
             {#if solutions.length > 0}
                 <PuzzleMatrix grid={convertStringToGrid(solutions[currentIndex])} />
             {:else}
-                <p>No solutions available.</p>
+                <p>No solutions available</p>
             {/if}
         </div>
 
