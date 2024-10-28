@@ -13,6 +13,7 @@
   let currentIndex = 0;
   let showAnalysis = false;
   let analysisData = [];
+  let solutionAreaRef;
 
 
   function handleInputChange(newInputString) {
@@ -33,10 +34,14 @@
 
   function handleShuffle() {
     let shuffledArray;
-    shuffledArray = shuffleArray(inputString.split(''));
+    do {
+      shuffledArray = shuffleArray(inputString.split(''));
+    } while (!isSolvable(shuffledArray.join('')));
+    
     inputString = shuffledArray.join('');
     grid = convertStringToGrid(inputString);
   }
+
 
   // Helper function to shuffle an array
   function shuffleArray(array) {
@@ -47,22 +52,22 @@
     return array;
   }
 
-// // Check if the shuffled string is solvable
-// function isSolvable(puzzleString) {
-//   const puzzleArray = puzzleString.split('').map(Number);
-//   let inversions = 0;
-  
-//   for (let i = 0; i < puzzleArray.length - 1; i++) {
-//     for (let j = i + 1; j < puzzleArray.length; j++) {
-//       if (puzzleArray[i] !== 0 && puzzleArray[j] !== 0 && puzzleArray[i] > puzzleArray[j]) {
-//         inversions++;
-//       }
-//     }
-//   }
+  // Check if the shuffled string is solvable
+  function isSolvable(puzzleString) {
+    const puzzleArray = puzzleString.split('').map(Number);
+    let inversions = 0;
+      
+    for (let i = 0; i < puzzleArray.length - 1; i++) {
+      for (let j = i + 1; j < puzzleArray.length; j++) {
+        if (puzzleArray[i] !== 0 && puzzleArray[j] !== 0 && puzzleArray[i] > puzzleArray[j]) {
+          inversions++;
+        }
+      }
+    }
 
-//   // For a 3x3 grid, a puzzle is solvable if the number of inversions is even
-//   return inversions % 2 === 0;
-// }
+    // For a 3x3 grid, a puzzle is solvable if the number of inversions is even
+    return inversions % 2 === 0;
+  }
 
   async function handleSolveClick() {
     // Prepare data to send to the Flask server
@@ -76,6 +81,11 @@
       alert('Invalid Goal! Please enter a valid puzzle order.');
       return
     }
+    // if (!isSolvable(inputString))
+    // {
+    //   alert('Puzzle is unsolvable');
+    //   return
+    // }
     const data = {
       inputString: inputString,
       goalString: goalString,
@@ -92,8 +102,14 @@
 
     if (response.ok) {
       const result = await response.json();
-      solutions = result.path;
-      analysisData = result.info;
+      if(result.status=="success"){
+        solutionAreaRef.reset()
+        solutions = result.path;
+        analysisData = result.info;
+      }
+      else{
+        alert('Failed to find solution.');
+      }
     } else {
       console.error('Failed to start algorithm');
     }
@@ -152,7 +168,7 @@
       </div>
     </div>
 
-    <SolutionArea {solutions} {currentIndex} />
+    <SolutionArea bind:this={solutionAreaRef} {solutions} {currentIndex} />
   </div>
 
   {:else}

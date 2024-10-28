@@ -52,7 +52,7 @@
         isPlaying = false;
     }
 
-    function reset() {
+    export function reset() {
         pause();
         currentIndex = 0;
     }
