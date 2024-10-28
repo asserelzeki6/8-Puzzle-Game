@@ -26,9 +26,10 @@ class IT_DFS:
         """
         start_time = time.time()  # Start timing the search
         limit = 0  # Initial depth limit
-        self.max_depth = 500  # Maximum depth to explore
+        self.max_depth = 50000  # Maximum depth to explore
 
         while limit < self.max_depth:  # Iteratively deepen until max_depth is reached
+            frontier = []  # Stack for DFS exploration
             frontier = [(self.start_state, 0)]  # Stack with initial state and depth 0
             came_from = {}  # Maps each state to its predecessor for path reconstruction
             visited = {self.start_state: 0}  # Tracks visited states
@@ -36,25 +37,30 @@ class IT_DFS:
             while frontier:  # Continue while there are states in the stack
                 current, depth = frontier.pop()  # Pop the last state added (LIFO)
                 self.explored_nodes += 1  # Increment the count of explored nodes
-                # self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
+                self.search_depth = max(self.search_depth, depth)  # Update the maximum search depth
 
                 if current == self.goal_state:  # Check if the goal state is reached
+                    #print("found the goal")
                     self.total_time = time.time() - start_time  # Calculate total search time
                     self.search_depth=depth
                     return self.get_path(came_from, current)  # Return the path to the goal
 
-                if depth < limit and (current not in visited or depth < visited[current]):
-                    visited[current] = depth  # Mark as visited with current depth
-
+                if depth < limit :
+                    #print(f"visiting node {current} with depth {depth}")
                     # Explore neighbors of the current state
                     for next_state in self.get_neighbors(current):
-                        if next_state not in visited or depth + 1 < visited.get(next_state, float('inf')):
+                        #print(f"next state is {next_state}")
+                        if (next_state not in visited) or (depth + 1 < visited.get(next_state)):
+                            # print(f"added")
                             frontier.append((next_state, depth + 1))  # Add to the stack with incremented depth
+                            visited[next_state] = depth+1  # Mark as visited with current depth
                             came_from[next_state] = current  # Track predecessor for path reconstruction
+                        
 
             limit += 1  # Increase depth limit for the next iteration
 
         self.total_time = time.time() - start_time  # Calculate total time if no solution is found
+        #print(f"Finished here with limit {limit} and depth {self.search_depth} and explored nodes {self.explored_nodes}")
         return None  # Return None if no solution exists
 
     def get_neighbors(self, state):
@@ -69,30 +75,30 @@ class IT_DFS:
         """
         i = state.index('0')  # Find the index of the blank space (0)
         y, x = divmod(i, 3)
-        # print(i,x,y)
+        # #print(i,x,y)
         neighbors = []
 
         # Move the blank tile up (if possible)
         if y > 0:
-            # print("up")
+            # #print("up")
             up = self.swap(state, i, i - 3)  # Swap the blank tile with the tile above
             neighbors.append(up)
 
         # Move the blank tile right (if possible)
         if x < 2:  
-            # print("right")
+            # #print("right")
             right = self.swap(state, i, i + 1)  # Swap the blank tile with the tile on the right
             neighbors.append(right)
 
         # Move the blank tile left (if possible)
         if x > 0:
-            # print("left")
+            # #print("left")
             left = self.swap(state, i, i - 1)  # Swap the blank tile with the tile on the left
             neighbors.append(left)
 
         # Move the blank tile down (if possible)
         if y < 2:
-            # print("down")
+            # #print("down")
             down = self.swap(state, i, i + 3)  # Swap the blank tile with the tile below
             neighbors.append(down)
 
