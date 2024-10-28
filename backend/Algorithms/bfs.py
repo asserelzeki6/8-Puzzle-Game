@@ -48,7 +48,7 @@ class BFS:
                     self.search_depth = max(self.search_depth, len(came_from))  # Update search depth
 
         self.total_time = time.time() - start_time  # If no solution, compute total time
-        return None, float('inf')  # Return no solution
+        return None  # Return no solution
 
     def get_neighbors(self, state):
         """

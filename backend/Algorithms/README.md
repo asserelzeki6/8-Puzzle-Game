@@ -216,8 +216,116 @@ print(bfs.get_info())  # Expected output: {'explored_nodes': 17588, 'total_time'
 
 # DFS Search Algorithm Documentation
 
+### Class: `DFS`
+
+#### Parameters:
+
+- **`start_state`** (`str`): The initial state of the 8-puzzle, represented as a string (e.g., `'123456780'` where `'0'` is the blank space).
+- **`goal_state`** (`str`): The goal state of the puzzle (default is `'012345678'`).
+- **`heuristic`** (`str`): Not used in DFS but included for consistency with other algorithms.
+
+#### Attributes:
+
+- **`explored_nodes`** (`int`): Tracks the number of explored nodes.
+- **`search_depth`** (`int`): Tracks the maximum depth reached during the search.
+- **`total_time`** (`float`): Total time taken for the search in seconds.
+
+#### Methods:
+
+1. **`run()`**:
+   Executes the DFS algorithm and returns the path to the goal if found, or `None` if there is no solution.
+
+2. **`get_neighbors(state: str)`**:
+   Generates neighboring states by moving the blank tile up, down, left, or right.
+
+3. **`swap(state: str, i: int, j: int)`**:
+   Swaps two characters in the puzzle state to simulate tile movement.
+
+4. **`get_path(came_from: dict, current: str)`**:
+   Reconstructs the path from the start state to the goal state using a dictionary of predecessors.
+
+5. **`get_info()`**:
+   Returns a dictionary with statistics about the search, including the number of explored nodes, total execution time, and the maximum search depth.
+
+---
+
+### Example Usage
+
+```python
+# Initialize the DFS algorithm with start and goal states
+dfs = DFS('123456780', '012345678')
+
+# Run the algorithm
+path = dfs.run()
+
+# Print the resulting path and search statistics
+print(path)  # Example output: ['123456780', ..., '012345678']
+print(dfs.get_info())  # Example output: {'explored_nodes': X, 'total_time': Y, 'search_depth': Z}
+```
+
+### Expected Output
+
+```python
+['123456708', '123456078', '123450678', '123405678', '123045678', '023145678', '203145678', '230145678', '231045678', '031245678', '301245678', '310245678', '312045678', '012345678']
+{'explored_nodes': 17588, 'total_time': 0.07373905181884766, 'search_depth': 25673}
+```
+
 ---
 
 # Iterative DFS Search Algorithm Documentation
+
+### Class: `IT_DFS`
+
+#### Parameters:
+
+- **`start_state`** (`str`): The initial state of the 8-puzzle, represented as a string (e.g., `'123456780'` where `'0'` is the blank space).
+- **`goal_state`** (`str`): The goal state of the puzzle (default is `'012345678'`).
+- **`heuristic`** (`str`): Not used in IDDFS but included for consistency with other algorithms.
+
+#### Attributes:
+
+- **`explored_nodes`** (`int`): Tracks the number of explored nodes.
+- **`search_depth`** (`int`): Tracks the maximum depth reached during the search.
+- **`total_time`** (`float`): Total time taken for the search in seconds.
+
+#### Methods:
+
+1. **`run()`**:
+   Executes the IDDFS algorithm and returns the path to the goal if found, or `None` if there is no solution.
+
+2. **`get_neighbors(state: str)`**:
+   Generates neighboring states by moving the blank tile up, down, left, or right.
+
+3. **`swap(state: str, i: int, j: int)`**:
+   Swaps two characters in the puzzle state to simulate tile movement.
+
+4. **`get_path(came_from: dict, current: str)`**:
+   Reconstructs the path from the start state to the goal state using a dictionary of predecessors.
+
+5. **`get_info()`**:
+   Returns a dictionary with statistics about the search, including the number of explored nodes, total execution time, and the maximum search depth.
+
+---
+
+### Example Usage
+
+```python
+# Initialize the IDDFS algorithm with start and goal states
+it_dfs = IT_DFS('123456780', '012345678')
+
+# Run the algorithm
+path = it_dfs.run()
+
+# Print the resulting path and search statistics
+print(path)  # Example output: ['123456780', ..., '012345678']
+print(it_dfs.get_info())  # Example output: {'explored_nodes': X, 'total_time': Y, 'search_depth': Z}
+```
+
+### Expected Output
+
+```python
+['123456708', '123456078', '123450678', '123405678', '123045678', '023145678', '203145678', '230145678', '231045678', '031245678', '301245678', '310245678', '312045678', '012345678']
+{'explored_nodes': 17588, 'total_time': 0.07373905181884766, 'search_depth': 25673}
+```
 
 ---
