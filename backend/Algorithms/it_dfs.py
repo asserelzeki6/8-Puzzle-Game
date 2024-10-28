@@ -43,12 +43,12 @@ class IT_DFS:
                     self.search_depth=depth
                     return self.get_path(came_from, current)  # Return the path to the goal
 
-                if depth < limit:  # Proceed only if depth is within the current limit
-                    visited[current] = 0  # Mark as visited
+                if depth < limit and (current not in visited or depth < visited[current]):
+                    visited[current] = depth  # Mark as visited with current depth
 
                     # Explore neighbors of the current state
                     for next_state in self.get_neighbors(current):
-                        if next_state not in visited:  # Only add unvisited states to the stack
+                        if next_state not in visited or depth + 1 < visited.get(next_state, float('inf')):
                             frontier.append((next_state, depth + 1))  # Add to the stack with incremented depth
                             came_from[next_state] = current  # Track predecessor for path reconstruction
 
