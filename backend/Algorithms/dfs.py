@@ -26,14 +26,15 @@ class DFS:
         """
         start_time = time.time()  # Start timing the search
         frontier = []  # Stack for DFS exploration
-        frontier.append(self.start_state)  # Add the initial state to the stack
+        frontier.append([self.start_state,0])  # Add the initial state to the stack, path_length
         came_from = {}  # Maps each state to its predecessor to reconstruct the path
         visited = {self.start_state: 0}  # Tracks visited states
 
         while frontier:  # Continue while there are states in the stack
-            current = frontier.pop()  # Pop the last state added (LIFO)
+            current,path_length = frontier.pop()  # Pop the last state added (LIFO)
             self.explored_nodes += 1  # Increment the count of explored nodes
-            self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
+            self.search_depth = max(self.search_depth, path_length)  # Update the maximum search depth
+            # self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
             
 
             if current == self.goal_state:  # Check if the goal state is reached
@@ -44,7 +45,7 @@ class DFS:
             for next_state in self.get_neighbors(current):
                 if next_state not in visited:  # Only add unvisited states to the stack
                     visited[next_state] = 0  # Mark as visited
-                    frontier.append(next_state)  # Add to the stack
+                    frontier.append([next_state,path_length+1])  # Add to the stack
                     came_from[next_state] = current  # Track predecessor for path reconstruction
 
         self.total_time = time.time() - start_time  # Calculate total time if no solution is found

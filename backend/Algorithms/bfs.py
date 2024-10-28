@@ -26,14 +26,15 @@ class BFS:
         """
         start_time = time.time()  # Start timing the execution
         frontier = queue.Queue()  # FIFO queue for nodes to explore
-        frontier.put(self.start_state)  # Add the start state to the frontier
+        frontier.put([self.start_state,0])  # Add the start state to the frontier
         came_from = {}  # Tracks the path to each node
         visited = {self.start_state: 0}  # Tracks visited states
 
         while not frontier.empty():  # Loop while the frontier is not empty
-            current = frontier.get()  # Dequeue the next state to explore
+            current,path_length = frontier.get()  # Dequeue the next state to explore
             self.explored_nodes += 1  # Increment the explored node count
-            self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
+            self.search_depth = max(self.search_depth, path_length)  # Update the maximum search depth
+            # self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
 
 
             if current == self.goal_state:  # Check if the goal state is reached
@@ -44,7 +45,7 @@ class BFS:
             for next_state in self.get_neighbors(current):
                 if next_state not in visited:  # Process only unvisited states
                     visited[next_state] = 0  # Mark the state as visited
-                    frontier.put(next_state)  # Add the neighbor to the frontier
+                    frontier.put([next_state,path_length])  # Add the neighbor to the frontier
                     came_from[next_state] = current  # Record where we came from
 
         self.total_time = time.time() - start_time  # If no solution, compute total time

@@ -1,7 +1,7 @@
 import time
 
 class IT_DFS:
-    def __init__(self, start_state, goal_state='012345678'):
+    def __init__(self, start_state, goal_state='012345678',max_depth=500):
         """
         Initializes the IDDFS search algorithm.
 
@@ -12,6 +12,7 @@ class IT_DFS:
         """
         self.start_state = start_state
         self.goal_state = goal_state
+        self.max_depth = max_depth  # Maximum depth to explore
         self.explored_nodes = 0  # Tracks the number of explored nodes
         self.search_depth = 0  # Maximum depth reached during the search
         self.total_time = 0  # Total time taken to complete the search
@@ -25,9 +26,9 @@ class IT_DFS:
         """
         start_time = time.time()  # Start timing the search
         limit = 0  # Initial depth limit
-        max_depth = 500  # Maximum depth to explore
+        self.max_depth = 500  # Maximum depth to explore
 
-        while limit < max_depth:  # Iteratively deepen until max_depth is reached
+        while limit < self.max_depth:  # Iteratively deepen until max_depth is reached
             frontier = [(self.start_state, 0)]  # Stack with initial state and depth 0
             came_from = {}  # Maps each state to its predecessor for path reconstruction
             visited = {self.start_state: 0}  # Tracks visited states
@@ -35,10 +36,11 @@ class IT_DFS:
             while frontier:  # Continue while there are states in the stack
                 current, depth = frontier.pop()  # Pop the last state added (LIFO)
                 self.explored_nodes += 1  # Increment the count of explored nodes
-                self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
+                # self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
 
                 if current == self.goal_state:  # Check if the goal state is reached
                     self.total_time = time.time() - start_time  # Calculate total search time
+                    self.search_depth=depth
                     return self.get_path(came_from, current)  # Return the path to the goal
 
                 if depth < limit:  # Proceed only if depth is within the current limit

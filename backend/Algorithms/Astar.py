@@ -28,14 +28,14 @@ class AStar:
         """
         start_time = time.time()  # Start timing the algorithm
         frontier = []  # Priority queue for nodes to explore
-        heapq.heappush(frontier, (0, self.start_state))  # Push the initial state with a cost of 0
+        heapq.heappush(frontier, (0, self.start_state, 0))  # Push the initial state with a cost of 0
         came_from = {}  # Dictionary to store the path to reach each node
         cost_so_far = {self.start_state: 0}  # Dictionary to store the cost to reach each state
 
         while frontier:  # Loop while there are nodes in the frontier
-            _, current = heapq.heappop(frontier)  # Get the node with the lowest cost
+            _, current, path_length = heapq.heappop(frontier)  # Get the node with the lowest cost
             self.explored_nodes += 1  # Increment the number of explored nodes
-            self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
+            self.search_depth = max(self.search_depth, path_length)  # Update the maximum search depth
 
             if current == self.goal_state:  # If the current node is the goal state
                 self.total_time = time.time() - start_time  # Calculate total time
@@ -48,7 +48,7 @@ class AStar:
                 # If the neighbor is unvisited or the new cost is lower than a previous visit
                 if next_state not in cost_so_far or new_cost < cost_so_far[next_state]:
                     cost_so_far[next_state] = new_cost  # Update the cost to reach the neighbor
-                    heapq.heappush(frontier, (new_cost, next_state))  # Add the neighbor to the frontier
+                    heapq.heappush(frontier, (new_cost, next_state, path_length+1))  # Add the neighbor to the frontier
                     came_from[next_state] = current  # Record the current state as the predecessor
 
         # If no solution is found, return None and infinite cost
