@@ -37,9 +37,16 @@ def start_algorithm():
     elif algorithm_name == "dfs":
         solver = DFS(initial_input, goal)
         path = solver.run()
-    elif algorithm_name == "it-dfs":
+    elif algorithm_name == "dls":
+        print(f"it-dfs with input {initial_input} and goal {goal}")
         solver = IT_DFS(initial_input, goal)
         path = solver.run()
+    else:
+        print(f"Invalid algorithm name: {algorithm_name}")
+        return jsonify({
+            'message': f'Invalid algorithm name: {algorithm_name}',
+            'status': 'failed'
+        })
 
     if path is None:
         print("no solution found")

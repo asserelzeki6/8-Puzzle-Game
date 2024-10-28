@@ -69,27 +69,28 @@ class BFS:
         if y > 0:
             # print("up")
             up = self.swap(state, i, i - 3)  # Swap the blank tile with the tile above
-            neighbors.append((up, self.get_cost(up)))
+            neighbors.append(up)
 
         # Move the blank tile right (if possible)
         if x < 2:  
             # print("right")
             right = self.swap(state, i, i + 1)  # Swap the blank tile with the tile on the right
-            neighbors.append((right, self.get_cost(right)))
+            neighbors.append(right)
 
         # Move the blank tile left (if possible)
         if x > 0:
             # print("left")
             left = self.swap(state, i, i - 1)  # Swap the blank tile with the tile on the left
-            neighbors.append((left, self.get_cost(left)))
+            neighbors.append(left)
 
         # Move the blank tile down (if possible)
         if y < 2:
             # print("down")
             down = self.swap(state, i, i + 3)  # Swap the blank tile with the tile below
-            neighbors.append((down, self.get_cost(down)))
+            neighbors.append(down)
 
         return neighbors
+
 
     def swap(self, state, i, j):
         """
