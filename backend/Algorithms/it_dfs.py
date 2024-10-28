@@ -27,10 +27,12 @@ class IT_DFS:
         start_time = time.time()  # Start timing the search
         limit = 0  # Initial depth limit
         self.max_depth = 50000  # Maximum depth to explore
+        self.max_depth = 1000000  # Maximum depth to explore
 
         while limit < self.max_depth:  # Iteratively deepen until max_depth is reached
             frontier = []  # Stack for DFS exploration
             frontier = [(self.start_state, 0)]  # Stack with initial state and depth 0
+
             came_from = {}  # Maps each state to its predecessor for path reconstruction
             visited = {self.start_state: 0}  # Tracks visited states
 
@@ -45,13 +47,14 @@ class IT_DFS:
                     self.search_depth=depth
                     return self.get_path(came_from, current)  # Return the path to the goal
 
-                if depth < limit :
                     #print(f"visiting node {current} with depth {depth}")
+                if depth < limit:
+                    # visited[current] = depth  # Mark as visited with current depth
                     # Explore neighbors of the current state
                     for next_state in self.get_neighbors(current):
                         #print(f"next state is {next_state}")
                         if (next_state not in visited) or (depth + 1 < visited.get(next_state)):
-                            # print(f"added")
+                            frontier = [(state, d) for state, d in frontier if state != next_state]
                             frontier.append((next_state, depth + 1))  # Add to the stack with incremented depth
                             visited[next_state] = depth+1  # Mark as visited with current depth
                             came_from[next_state] = current  # Track predecessor for path reconstruction
