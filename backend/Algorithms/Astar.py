@@ -35,6 +35,7 @@ class AStar:
         while frontier:  # Loop while there are nodes in the frontier
             _, current = heapq.heappop(frontier)  # Get the node with the lowest cost
             self.explored_nodes += 1  # Increment the number of explored nodes
+            self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
 
             if current == self.goal_state:  # If the current node is the goal state
                 self.total_time = time.time() - start_time  # Calculate total time
@@ -49,7 +50,6 @@ class AStar:
                     cost_so_far[next_state] = new_cost  # Update the cost to reach the neighbor
                     heapq.heappush(frontier, (new_cost, next_state))  # Add the neighbor to the frontier
                     came_from[next_state] = current  # Record the current state as the predecessor
-                    self.search_depth = max(self.search_depth, len(came_from))  # Update the maximum search depth
 
         # If no solution is found, return None and infinite cost
         self.total_time = time.time() - start_time  # Calculate total time
@@ -187,9 +187,10 @@ class AStar:
         Returns:
             A dictionary containing the number of explored nodes, total execution time, and search depth.
         """
+
         return {
-            'explored_nodes': self.explored_nodes,  # Number of nodes explored
-            'total_time': self.total_time,  # Total time taken for the search
-            'search_depth': self.search_depth,  # Maximum search depth reached
-            'cost':self.cost
+            'explored nodes': self.explored_nodes,  # Number of nodes explored
+            'total time': round(self.total_time,3),  # Total time taken for the search
+            'max search depth': self.search_depth,  # Maximum search depth reached
+            'cost':round(self.cost,3)
         }

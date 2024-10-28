@@ -2,7 +2,7 @@ import queue
 import time
 
 class BFS:
-    def __init__(self, start_state, goal_state='012345678', heuristic='Manhattan'):
+    def __init__(self, start_state, goal_state='012345678'):
         """
         Initializes the BFS search algorithm.
 
@@ -13,7 +13,6 @@ class BFS:
         """
         self.start_state = start_state
         self.goal_state = goal_state
-        self.heuristic = heuristic
         self.explored_nodes = 0  # Count of how many nodes have been explored
         self.search_depth = 0  # Maximum depth reached during the search
         self.total_time = 0  # Time taken to complete the search
@@ -34,6 +33,8 @@ class BFS:
         while not frontier.empty():  # Loop while the frontier is not empty
             current = frontier.get()  # Dequeue the next state to explore
             self.explored_nodes += 1  # Increment the explored node count
+            self.search_depth = max(self.search_depth, len(self.get_path(came_from,current)))  # Update the maximum search depth
+
 
             if current == self.goal_state:  # Check if the goal state is reached
                 self.total_time = time.time() - start_time  # Calculate total time
@@ -45,7 +46,6 @@ class BFS:
                     visited[next_state] = 0  # Mark the state as visited
                     frontier.put(next_state)  # Add the neighbor to the frontier
                     came_from[next_state] = current  # Record where we came from
-                    self.search_depth = max(self.search_depth, len(came_from))  # Update search depth
 
         self.total_time = time.time() - start_time  # If no solution, compute total time
         return None  # Return no solution
@@ -115,15 +115,17 @@ class BFS:
         path.reverse()  # Reverse the path to start with the initial state
         return path
 
+
     def get_info(self):
         """
-        Retrieves information about the search process.
+        Returns information about the search process.
 
         Returns:
-            dict: Contains the number of explored nodes, total time, and maximum search depth.
+            A dictionary containing the number of explored nodes, total execution time, and search depth.
         """
+
         return {
-            'explored_nodes': self.explored_nodes,  # Total number of nodes explored
-            'total_time': self.total_time,  # Time taken for the search
-            'search_depth': self.search_depth  # Maximum search depth
+            'explored nodes': self.explored_nodes,  # Number of nodes explored
+            'total time': round(self.total_time,3),  # Total time taken for the search
+            'max search depth': self.search_depth,  # Maximum search depth reached
         }

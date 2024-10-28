@@ -2,6 +2,9 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from Algorithms.Astar import AStar
 from Algorithms.bfs import BFS
+from Algorithms.dfs import DFS
+from Algorithms.it_dfs import IT_DFS
+
  
 app = Flask(__name__)
 CORS(app)
@@ -31,7 +34,20 @@ def start_algorithm():
     elif algorithm_name == "a-stare":
         solver = AStar(initial_input, goal, heuristic='euclidean')
         path = solver.run()[0]
-        
+    elif algorithm_name == "dfs":
+        solver = DFS(initial_input, goal)
+        path = solver.run()
+    elif algorithm_name == "it-dfs":
+        solver = IT_DFS(initial_input, goal)
+        path = solver.run()
+
+    if path is None:
+        print("no solution found")
+        return jsonify({
+            'message': f'No solution found with input {initial_input} using {algorithm_name}',
+            'status': 'failed'
+        })
+    
     analysis = solver.get_info()
 
     # Append analysis information to info
